@@ -1,1 +1,587 @@
-window.dataLayer=window.dataLayer||[];const getParseStorage=e=>{const t=localStorage.getItem(e);return JSON.parse(atob(t))},valueToDataLayer=(e,t)=>{let a={};const o=getParseStorage(t);Object.keys(o).forEach((t=>{e.includes(t)&&(a[t]=o[t])})),dataLayer.push({...a})},getValueFromStorage=(e,t)=>getParseStorage(t)[e],setValueFromStorage=(e,t,a)=>{const o=getParseStorage(a);o[e]=t,localStorage.setItem(a,btoa(JSON.stringify(o)))},initStorage=(e,t)=>(localStorage.setItem(e,btoa(JSON.stringify(t))),!0);!function(){const e=history.pushState,t=history.replaceState,a=e=>{const t=new CustomEvent("historyChanged",{detail:{currentLocation:location.pathname,action:e}});window.dispatchEvent(t)};history.pushState=function(){e.apply(this,arguments),a("pushState")},history.replaceState=function(){t.apply(this,arguments),a("replaceState")},window.addEventListener("popstate",(function(){a("popstate")}))}(),(()=>{let e=null;const t=e=>{const t=new CustomEvent(e);window.dispatchEvent(t)},a=[{location:"/Member/StreamlinedRegister",cb:()=>{t("action_register")},eventName:"action_register"},{location:"/Account/Deposit",cb:()=>{t("action_deposit")},eventName:"action_deposit"},{location:"/Account/Withdraw",cb:()=>{t("action_withdraw")},eventName:"action_withdraw"}],o=o=>{const n=a.find((e=>e.location===o.detail.currentLocation));if(localStorage.getItem("act_check_dep")&&!0===localStorage.getItem("act_check_dep")){localStorage.getItem("act_check_dep")<parseFloat(document.querySelector(".nav-main-wallet strong").textContent)&&(valueToDataLayer(["phone_number","account_name","amount","actual_amount","payment_method","remark","username","upload_image","event"],"act_check_dep"),localStorage.removeItem("act_check_dep"))}if(n)return t(n.eventName),void(e=n.eventName);e&&t(e+"_end"),e=null};window.addEventListener("historyChanged",o),o({detail:{currentLocation:location.pathname}}),window.dataLayer=window.dataLayer||[];var n=window.dataLayer.push;window.dataLayer.push=function(){var e=Array.prototype.slice.call(arguments);return e.forEach((function(e){if("balance_update"===e.event&&localStorage.getItem("act_check_dep")){const e=JSON.parse(localStorage.getItem("memInfo"));setValueFromStorage("profile_username",e.loginId,"act_check_dep"),setValueFromStorage("profile_bank_name",e.bankName,"act_check_dep"),setValueFromStorage("profile_bank_account_name",e.bankAcctName,"act_check_dep"),setValueFromStorage("profile_bank_account_number",e.bankAcctNo,"act_check_dep"),setValueFromStorage("profile_phone_number",e.contactNumber,"act_check_dep"),valueToDataLayer(["phone_number","account_name","amount","actual_amount","payment_method","remark","username","upload_image","event"],"act_check_dep"),localStorage.removeItem("act_check_dep")}})),n.apply(window.dataLayer,e)}})(),document.addEventListener("DOMContentLoaded",(()=>{const e="act_reg",t=[],a=(e,a,o)=>{t.push({event:e,selector:a,fn:o,handler:e=>{const t=e.target.closest(a);t&&o(e,t)},active:!1})};a("change",'[formcontrolname="userName"]',(t=>{setValueFromStorage("username",t.target.value,e)})),a("change",'[formcontrolname="bankAcctName"]',(t=>{setValueFromStorage("full_name",t.target.value,e)})),a("change",'[formcontrolname="phoneNumber"]',(t=>{setValueFromStorage("phone_number",t.target.value,e)})),a("change",'[formcontrolname="countryCode"]',(t=>{setValueFromStorage("country_code",t.target.value,e)})),a("submit","form",(()=>{valueToDataLayer(["username","full_name","phone_number","event"],e)})),window.addEventListener("action_register",(()=>{t.forEach((e=>{e.active||(document.body.addEventListener(e.event,e.handler),e.active=!0)}))})),window.addEventListener("action_register_end",(()=>{t.forEach((e=>{e.active&&(document.body.removeEventListener(e.event,e.handler),e.active=!1)}))})),initStorage(e,{action:"reg",event:"Register"})})),document.addEventListener("DOMContentLoaded",(()=>{const e="act_dep",t="act_check_dep",a=[],o=(e,t,o)=>{a.push({event:e,selector:t,fn:o,handler:e=>{const a=e.target.closest(t);a&&o(e,a)},active:!1})};o("change",'[name="wallet"]',(t=>{if(setValueFromStorage("payment_method",t.target.value,e),"ewallet"===t.target.value){const t=document.querySelector('[name="dPhoneNumber"]')?.value;t&&setValueFromStorage("phone_number",t,e)}})),o("change",'[name="dPhoneNumber"]',(t=>{setValueFromStorage("phone_number",t.target.value,e)})),o("change",'input[name="provider"]',(t=>{setTimeout((()=>{const t=document.querySelector('[formcontrolname="bankAccountName"]')?.value;t&&setValueFromStorage("account_name",t,e)}),1e3)})),o("change",'[name="payment"]',(t=>{setTimeout((()=>{const t=document.querySelector('[formcontrolname="bankAccountName"]')?.value;t&&setValueFromStorage("account_name",t,e)}),1e3)}));const n=()=>{const t=document.querySelector('[formcontrolname="bankAccountName"]')?.value;t&&setValueFromStorage("account_name",t,e);const a=document.querySelector('[name="dPhoneNumber"]')?.value;a&&setValueFromStorage("phone_number",a,e)};o("click",'[data_axq^="amount_"]',(t=>{const a=t.target.getAttribute("data_axq").replace("amount_",""),o=document.querySelector('[name="dActualMoney"]').value;setValueFromStorage("amount",a,e),setValueFromStorage("actual_amount",o,e),n()})),o("change",'[name="dAmount"]',(t=>{setValueFromStorage("amount",t.target.value,e);const a=document.querySelector('[name="dActualMoney"]').value;setValueFromStorage("actual_amount",a,e),n()})),o("change",'[formcontrolname="bankAccountNumber"]',(t=>{setValueFromStorage("account_number",t.target.value,e)})),o("change",'[formcontrolname="bankName"]',(t=>{setValueFromStorage("bank_name",t.target.value,e)})),o("change",'[name="dRemark"]',(t=>{setValueFromStorage("remark",t.target.value,e)})),o("click",".deposit-col .btn-group",(()=>{valueToDataLayer(["phone_number","account_name","amount","actual_amount","payment_method","remark","username","event"],e)}));let r=!1;const c=()=>{if(document.body.classList.contains("swal2-shown")){const a=document.querySelector(".swal2-popup.swal2-modal");if(a&&a.textContent.toLowerCase().match("qr")){initStorage(t,{event:"Purchase",action:"lis_dep"}),console.log("fromObserve"),setValueFromStorage("listening","true",t);const e=document.querySelector('[name="dAmount"]')?.value;e&&setValueFromStorage("amount",e,t);const a=document.querySelector('[name="dActualMoney"]')?.value;a&&setValueFromStorage("actual_amount",a,t);const o=document.querySelector(".deposit-col .select .target")?.textContent?.trim();o&&setValueFromStorage("payment_method",o,t);const n=parseFloat(document.querySelector(".nav-main-wallet strong")?.textContent);n&&setValueFromStorage("old_value",n,t),r&&r.disconnect()}else if(a.querySelector(".swal2-success-fix")){initStorage(t,{event:"Purchase",action:"lis_dep"});const a=document.querySelector(".upload-select");if(a){const o="Choose File"!=a?.textContent?.trim();setValueFromStorage("upload_image",o,e),setValueFromStorage("upload_image",o,t)}const o=document.querySelector('[name="dPhoneNumber"]')?.value;o&&(setValueFromStorage("phone_number",o,e),setValueFromStorage("phone_number",o,t));const n=document.querySelector('[name="dAmount"]')?.value;n&&(setValueFromStorage("amount",n,e),setValueFromStorage("amount",n,t));const c=document.querySelector('[name="dActualMoney"]')?.value;c&&(setValueFromStorage("actual_amount",c,e),setValueFromStorage("actual_amount",c,t));const u=document.querySelector(".deposit-col .select .target")?.textContent?.trim();u&&(setValueFromStorage("payment_method",u,e),setValueFromStorage("payment_method",u,t));const m=document.querySelector('[formcontrolname="bankAccountName"]')?.value;m&&(setValueFromStorage("account_name",m,e),setValueFromStorage("account_name",m,t));const l=document.querySelector('[formcontrolname="bankAccountNumber"]')?.value;l&&(setValueFromStorage("account_number",l,e),setValueFromStorage("account_number",l,t));const s=parseFloat(document.querySelector(".nav-main-wallet strong")?.textContent);s&&setValueFromStorage("old_value",s,t),setValueFromStorage("listening","true",t),r&&r.disconnect()}}};window.addEventListener("action_deposit",(()=>{a.forEach((e=>{e.active||(document.body.addEventListener(e.event,e.handler),e.active=!0)})),r=new MutationObserver(c),r.observe(document.body,{attributes:!0}),c()})),window.addEventListener("action_deposit_end",(()=>{a.forEach((e=>{e.active&&(document.body.removeEventListener(e.event,e.handler),e.active=!1)})),r&&r.disconnect()})),initStorage(e,{action:"dep",event:"Purchase"})})),document.addEventListener("DOMContentLoaded",(()=>{const e="act_wit",t=[],a=(e,a,o)=>{t.push({event:e,selector:a,fn:o,handler:e=>{const t=e.target.closest(a);t&&o(e,t)},active:!1})};a("change",'[name="wallet"]',(t=>{setValueFromStorage("payment_method",t.target.value,e)})),a("change",'[name="wAmount"]',(t=>{const a=document.querySelector('[name="wPhone"]')?.value;a&&setValueFromStorage("phone",a,e);const o=document.querySelector('[formcontrolname="bankAccountNumber"]')?.value;o&&setValueFromStorage("account_number",o,e);const n=document.querySelector('[formcontrolname="bankAccountName"]')?.value;n&&setValueFromStorage("account_number",n,e),setValueFromStorage("amount",t.target.value,e);const r=document.querySelector('[name="wNetMoney"]')?.value;setValueFromStorage("actual_amount",r,e)})),a("change",'[name="wPhone"]',(t=>{setValueFromStorage("phone",t.target.value,e)})),a("change",'[formcontrolname="bankAccountNumber"]',(t=>{setValueFromStorage("account_number",t.target.value,e)})),a("change",'[name="dRemark"]',(t=>{setValueFromStorage("remark",t.target.value,e)}));let o=!1;const n=()=>{document.body.classList.contains("swal2-shown")&&document.querySelector(".swal2-success-fix")&&(valueToDataLayer(["phone","account_number","amount","actual_amount","event","remark"],e),o.disconnect())};window.addEventListener("action_withdraw",(()=>{t.forEach((e=>{e.active||(document.body.addEventListener(e.event,e.handler),e.active=!0)})),o=new MutationObserver(n),o.observe(document.body,{attributes:!0}),n()})),window.addEventListener("action_withdraw_end",(()=>{t.forEach((e=>{e.active&&(document.body.removeEventListener(e.event,e.handler),e.active=!1)})),o&&o.disconnect()})),initStorage(e,{action:"wit",event:"Withdrawal"})}));
+window.dataLayer = window.dataLayer || [];
+
+const getParseStorage = (storageKey) => {
+    const storage = localStorage.getItem(storageKey)
+    return JSON.parse(atob(storage))
+}
+
+const valueToDataLayer = (expectedValues, storageKey) => {
+    let data = {}
+    const parse = getParseStorage(storageKey)
+    Object.keys(parse).forEach(key => {
+        if(expectedValues.includes(key)) data[key] = parse[key]
+    })
+
+    dataLayer.push({...data})
+}
+
+const getValueFromStorage = (key, storageKey) => {
+    const parse = getParseStorage(storageKey)
+    return parse[key]
+}
+
+const setValueFromStorage = (key, value, storageKey) => {
+    const parse = getParseStorage(storageKey)
+    parse[key] = value
+    localStorage.setItem(storageKey, btoa(JSON.stringify(parse)))
+}
+
+
+const initStorage = (storageKey, initialData) => {
+    localStorage.setItem(storageKey, btoa(JSON.stringify(initialData)))
+    return true
+}
+
+
+(function () {
+    const pushState = history.pushState;
+    const replaceState = history.replaceState;
+
+    const triggerEvent = (action) => {
+        // const customEvent = new CustomEvent('historyChanged', {
+        //     action: action, currentLocation: location.pathname
+        // })
+        const customEvent = new CustomEvent('historyChanged', {
+            detail: {
+                currentLocation: location.pathname,
+                action: action
+            }
+        })
+        window.dispatchEvent(customEvent)
+    }
+
+    history.pushState = function () {
+        pushState.apply(this, arguments);
+        triggerEvent('pushState')
+    };
+
+    history.replaceState = function () {
+        replaceState.apply(this, arguments);
+        triggerEvent('replaceState');
+    };
+
+    window.addEventListener('popstate', function () {
+        triggerEvent('popstate');
+    });
+})();
+
+// Decider
+(() => {
+
+    let currentActive = null
+
+    const triggerEvent = (eventName) => {
+        const customEvent = new CustomEvent(eventName)
+        window.dispatchEvent(customEvent)
+    }
+
+    const rules = [
+        {location: '/Member/StreamlinedRegister', cb: () => {
+            triggerEvent('action_register')
+
+        }, eventName: 'action_register'},
+        {location: '/Account/Deposit', cb: () => {
+            triggerEvent('action_deposit')
+        }, eventName: 'action_deposit'},
+        {location: '/Account/Withdraw', cb: () => {
+            triggerEvent('action_withdraw')
+        }, eventName: 'action_withdraw'},
+    ]
+
+    const main = (e) => {
+        const tryFind = rules.find(rule => (rule.location === e.detail.currentLocation))
+        if(localStorage.getItem('act_check_dep') && localStorage.getItem('act_check_dep') === true) {
+            const oldValue = localStorage.getItem('act_check_dep')
+            const newValue = parseFloat(document.querySelector('.nav-main-wallet strong').textContent) // need to check the value by dom
+            if(oldValue < newValue) {
+                valueToDataLayer(
+                    ['phone_number', 'account_name', 'amount', 'actual_amount', 'payment_method', 'remark', 'username', 'upload_image', 'event'],
+                    'act_check_dep'
+                )
+                localStorage.removeItem('act_check_dep')
+            }
+        }
+        if(tryFind) {
+            triggerEvent(tryFind.eventName)
+            currentActive = tryFind.eventName
+            return
+        }
+        if(currentActive) {
+            triggerEvent(currentActive + '_end')
+        }
+        currentActive = null
+    }
+    window.addEventListener('historyChanged', main)
+    main({detail: {currentLocation: location.pathname}})
+
+
+    window.dataLayer = window.dataLayer || [];
+
+    var originalPush = window.dataLayer.push;
+
+    window.dataLayer.push = function() {
+            var args = Array.prototype.slice.call(arguments);
+
+            args.forEach(function(item) {
+
+                if(item.event === 'balance_update') {
+
+                    if(localStorage.getItem('act_check_dep')) {
+
+                        const info = JSON.parse(localStorage.getItem('memInfo'))
+
+                        setValueFromStorage('profile_username', info.loginId, 'act_check_dep')
+                        setValueFromStorage('profile_bank_name', info.bankName, 'act_check_dep')
+                        setValueFromStorage('profile_bank_account_name', info.bankAcctName, 'act_check_dep')
+                        setValueFromStorage('profile_bank_account_number', info.bankAcctNo, 'act_check_dep')
+                        setValueFromStorage('profile_phone_number', info.contactNumber, 'act_check_dep')
+
+                        valueToDataLayer(
+                            ['phone_number', 'account_name', 'amount', 'actual_amount', 'payment_method', 'remark', 'username', 'upload_image', 'event'],
+                            'act_check_dep'
+                        )
+                        localStorage.removeItem('act_check_dep')
+                    } else {
+
+                    }
+                }
+            });
+
+            // Call original push
+            return originalPush.apply(window.dataLayer, args);
+        };
+
+
+})();
+
+
+// Registration
+(() => {
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const STORAGE_KEY = 'act_reg';
+
+
+        const listeners = []
+
+        const registerListener = (event, selector, fn) => {
+            const handler = (e) => {
+                const el = e.target.closest(selector)
+                if (el) fn(e, el)
+            }
+
+            listeners.push({
+                event,
+                selector,
+                fn,
+                handler,
+                active: false
+            })
+        }
+
+        registerListener('change', '[formcontrolname="userName"]', (e) => {
+            setValueFromStorage('username', e.target.value, STORAGE_KEY)
+        })
+        registerListener('change', '[formcontrolname="bankAcctName"]', (e) => {
+            setValueFromStorage('full_name', e.target.value, STORAGE_KEY)
+        })
+        registerListener('change', '[formcontrolname="phoneNumber"]', (e) => {
+            setValueFromStorage('phone_number', e.target.value, STORAGE_KEY)
+        })
+        registerListener('change', '[formcontrolname="countryCode"]', (e) => {
+            setValueFromStorage('country_code', e.target.value, STORAGE_KEY)
+        })
+
+
+        registerListener('submit', 'form', () => {
+            valueToDataLayer(['username', 'full_name', 'phone_number', 'event'], STORAGE_KEY)
+        })
+
+
+
+        window.addEventListener('action_register', () => {
+            listeners.forEach(item => {
+                if (!item.active) {
+                    document.body.addEventListener(item.event, item.handler)
+                    item.active = true
+                }
+            })
+        })
+
+        window.addEventListener('action_register_end', () => {
+            listeners.forEach(item => {
+                if (item.active) {
+                    document.body.removeEventListener(item.event, item.handler)
+                    item.active = false
+                }
+            })
+        })
+
+
+        initStorage(STORAGE_KEY, {
+            action: 'reg',
+            event: 'Register'
+        })
+    })
+})();
+
+// Deposit
+(() => {
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const STORAGE_KEY = 'act_dep';
+        const STORAGE_KEY_POST = 'act_check_dep';
+
+
+        const listeners = []
+
+        const registerListener = (event, selector, fn) => {
+            const handler = (e) => {
+                const el = e.target.closest(selector)
+                if (el) fn(e, el)
+            }
+
+            listeners.push({
+                event,
+                selector,
+                fn,
+                handler,
+                active: false
+            })
+        }
+
+        registerListener('change', '[name="wallet"]', (e) => {
+            setValueFromStorage('payment_method', e.target.value, STORAGE_KEY)
+            if(e.target.value === 'ewallet') {
+                // check for mobile already exist
+                const phone = document.querySelector('[name="dPhoneNumber"]')?.value
+                if(phone) {
+                    setValueFromStorage('phone_number', phone, STORAGE_KEY)
+                }
+            }
+        })
+
+
+        registerListener('change', '[name="dPhoneNumber"]', e => {
+            setValueFromStorage('phone_number', e.target.value, STORAGE_KEY)
+        })
+        registerListener('change', 'input[name="provider"]',  (e) => {
+            setTimeout(() => {
+                const accName = document.querySelector('[formcontrolname="bankAccountName"]')?.value
+                if(accName) {
+                    setValueFromStorage('account_name', accName, STORAGE_KEY)
+                }
+            }, 1000)
+        })
+        registerListener('change', '[name="payment"]', e => {
+            setTimeout(() => {
+                const accName = document.querySelector('[formcontrolname="bankAccountName"]')?.value
+                if(accName) {
+                    setValueFromStorage('account_name', accName, STORAGE_KEY)
+                }
+            }, 1000)
+        })
+
+        const checkForAccountNameAndPhone = () => {
+            const accName = document.querySelector('[formcontrolname="bankAccountName"]')?.value
+            if(accName) {
+                setValueFromStorage('account_name', accName, STORAGE_KEY)
+            }
+            const phone = document.querySelector('[name="dPhoneNumber"]')?.value
+            if(phone) {
+                setValueFromStorage('phone_number', phone, STORAGE_KEY)
+            }
+        }
+
+        registerListener('click', '[data_axq^="amount_"]', (e) => {
+            const amount = e.target.getAttribute('data_axq').replace('amount_', '')
+            const actualMoney = document.querySelector('[name="dActualMoney"]').value
+            setValueFromStorage('amount', amount, STORAGE_KEY)
+            setValueFromStorage('actual_amount', actualMoney, STORAGE_KEY)
+            checkForAccountNameAndPhone()
+        })
+        registerListener('change', '[name="dAmount"]', (e) => {
+            setValueFromStorage('amount', e.target.value, STORAGE_KEY)
+            const actualMoney = document.querySelector('[name="dActualMoney"]').value
+            setValueFromStorage('actual_amount', actualMoney, STORAGE_KEY)
+            checkForAccountNameAndPhone()
+        })
+
+        registerListener('change', '[formcontrolname="bankAccountNumber"]', e => {
+            setValueFromStorage('account_number', e.target.value, STORAGE_KEY)
+        })
+
+        registerListener('change', '[formcontrolname="bankName"]', (e) => {
+            setValueFromStorage('bank_name', e.target.value, STORAGE_KEY)
+        })
+        registerListener('change', '[name="dRemark"]', (e) => {
+            setValueFromStorage('remark', e.target.value, STORAGE_KEY)
+        })
+
+
+        registerListener('click', '.deposit-col .btn-group', () => {
+            valueToDataLayer(
+                ['phone_number', 'account_name', 'amount', 'actual_amount', 'payment_method', 'remark', 'username', 'event'],
+                STORAGE_KEY
+            )
+        })
+
+        let observer = false
+        const observeCb = () => {
+            if(document.body.classList.contains('swal2-shown')) {
+                const popup = document.querySelector('.swal2-popup.swal2-modal')
+                if(popup && !!popup.textContent.toLowerCase().match('qr')) {
+                    initStorage(STORAGE_KEY_POST, {event: "Purchase", action: "lis_dep"})
+                    console.log('fromObserve')
+                    setValueFromStorage('listening', 'true', STORAGE_KEY_POST)
+                    const amount = document.querySelector('[name="dAmount"]')?.value
+                    if(amount) {
+                        setValueFromStorage('amount', amount, STORAGE_KEY_POST)
+                    }
+
+                    const actualAmount = document.querySelector('[name="dActualMoney"]')?.value
+                    if(actualAmount) {
+                        setValueFromStorage('actual_amount', actualAmount, STORAGE_KEY_POST)
+                    }
+
+                    const paymentMethod = document.querySelector('.deposit-col .select .target')?.textContent?.trim()
+                    if(paymentMethod) {
+                        setValueFromStorage('payment_method', paymentMethod, STORAGE_KEY_POST)
+                    }
+                    const oldValue = parseFloat(document.querySelector('.nav-main-wallet strong')?.textContent)
+                    if(oldValue) {
+                        setValueFromStorage('old_value', oldValue, STORAGE_KEY_POST)
+                    }
+                    if(observer) {
+                        observer.disconnect()
+                    }
+                } else if (popup.querySelector('.swal2-success-fix')) {
+                    initStorage(STORAGE_KEY_POST, {event: "Purchase", action: "lis_dep"})
+                    const uploadEl = document.querySelector('.upload-select')
+                    if(uploadEl) {
+                        const isUpload = uploadEl?.textContent?.trim() != 'Choose File'
+                        setValueFromStorage('upload_image', isUpload, STORAGE_KEY)
+                        setValueFromStorage('upload_image', isUpload, STORAGE_KEY_POST)
+                    }
+
+                    const phone = document.querySelector('[name="dPhoneNumber"]')?.value
+                    if(phone) {
+                        setValueFromStorage('phone_number', phone, STORAGE_KEY)
+                        setValueFromStorage('phone_number', phone, STORAGE_KEY_POST)
+                    }
+
+                    const amount = document.querySelector('[name="dAmount"]')?.value
+                    if(amount) {
+                        setValueFromStorage('amount', amount, STORAGE_KEY)
+                        setValueFromStorage('amount', amount, STORAGE_KEY_POST)
+                    }
+
+                    const actualAmount = document.querySelector('[name="dActualMoney"]')?.value
+                    if(actualAmount) {
+                        setValueFromStorage('actual_amount', actualAmount, STORAGE_KEY)
+                        setValueFromStorage('actual_amount', actualAmount, STORAGE_KEY_POST)
+                    }
+
+                    const paymentMethod = document.querySelector('.deposit-col .select .target')?.textContent?.trim()
+                    if(paymentMethod) {
+                        setValueFromStorage('payment_method', paymentMethod, STORAGE_KEY)
+                        setValueFromStorage('payment_method', paymentMethod, STORAGE_KEY_POST)
+                    }
+
+                    const accountName = document.querySelector('[formcontrolname="bankAccountName"]')?.value
+                    if(accountName) {
+                        setValueFromStorage('account_name', accountName, STORAGE_KEY)
+                        setValueFromStorage('account_name', accountName, STORAGE_KEY_POST)
+                    }
+
+                    const accountNumber = document.querySelector('[formcontrolname="bankAccountNumber"]')?.value
+                    if(accountNumber) {
+                        setValueFromStorage('account_number', accountNumber, STORAGE_KEY)
+                        setValueFromStorage('account_number', accountNumber, STORAGE_KEY_POST)
+                    }
+
+                    const oldValue = parseFloat(document.querySelector('.nav-main-wallet strong')?.textContent)
+                    if(oldValue) {
+                        setValueFromStorage('old_value', oldValue, STORAGE_KEY_POST)
+                    }
+
+
+
+                    // valueToDataLayer(
+                    //     ['phone_number', 'account_name', 'account_number', 'amount', 'actual_amount', 'payment_method', 'remark', 'username', 'upload_image', 'event'],
+                    //     STORAGE_KEY
+                    // )
+
+                    // setValueFromStorage('upload_image', isUpload, STORAGE_KEY_POST)
+                    setValueFromStorage('listening', 'true', STORAGE_KEY_POST)
+                    
+                    // setValueFromStorage('amount', amount, STORAGE_KEY_POST)
+                    // setValueFromStorage('actual_amount', actualAmount, STORAGE_KEY_POST)
+                    // setValueFromStorage('payment_method', paymentMethod, STORAGE_KEY_POST)
+                    // setValueFromStorage('account_name', accountName, STORAGE_KEY_POST)
+                    // setValueFromStorage('account_number', accountNumber, STORAGE_KEY_POST)
+                    if(observer) {
+                        observer.disconnect()
+                    }
+                }
+                
+            }
+        }
+
+
+
+        window.addEventListener('action_deposit', () => {
+            listeners.forEach(item => {
+                if (!item.active) {
+                    document.body.addEventListener(item.event, item.handler)
+                    item.active = true
+                }
+            })
+            observer = new MutationObserver(observeCb)
+            observer.observe(document.body, {attributes: true})
+            observeCb()
+
+        })
+
+        window.addEventListener('action_deposit_end', () => {
+            listeners.forEach(item => {
+                if (item.active) {
+                    document.body.removeEventListener(item.event, item.handler)
+                    item.active = false
+                }
+            })
+            if(observer) {
+                observer.disconnect()
+            }
+        })
+
+
+        initStorage(STORAGE_KEY, {
+            action: "dep",
+            event: "Purchase"
+        })
+    })
+})();
+
+
+
+
+// Withdrawal
+(() => {
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const STORAGE_KEY = 'act_wit';
+
+
+        const listeners = []
+
+        const registerListener = (event, selector, fn) => {
+            const handler = (e) => {
+                const el = e.target.closest(selector)
+                if (el) fn(e, el)
+            }
+
+            listeners.push({
+                event,
+                selector,
+                fn,
+                handler,
+                active: false
+            })
+        }
+
+        registerListener('change', '[name="wallet"]', (e) => {
+            setValueFromStorage('payment_method', e.target.value, STORAGE_KEY)
+            // if(e.target.value === 'ewallet') {
+            //     // check for mobile already exist
+            //     const phone = document.querySelector('[name="dPhoneNumber"]').value
+            //     if(phone) {
+            //         setValueFromStorage('phone_number', phone)
+            //     }
+            //     registerListener('change', '[name="dPhoneNumber"]', e => {
+            //         setValueFromStorage('phone_number', e.target.value, STORAGE_KEY)
+            //     })
+            // }
+        })
+        registerListener('change', '[name="wAmount"]', (e) => {
+            const phone = document.querySelector('[name="wPhone"]')?.value
+            if(phone) {
+                setValueFromStorage('phone', phone, STORAGE_KEY)
+            }
+            const accountNum = document.querySelector('[formcontrolname="bankAccountNumber"]')?.value
+            if(accountNum) {
+                setValueFromStorage('account_number', accountNum, STORAGE_KEY)
+            }
+            const accountName = document.querySelector('[formcontrolname="bankAccountName"]')?.value
+            if(accountName) {
+                setValueFromStorage('account_number', accountName, STORAGE_KEY)
+            }
+            setValueFromStorage('amount', e.target.value, STORAGE_KEY)
+            const actualMoney = document.querySelector('[name="wNetMoney"]')?.value
+            setValueFromStorage('actual_amount', actualMoney, STORAGE_KEY)
+            
+        })
+        registerListener('change', '[name="wPhone"]', e => {
+            setValueFromStorage('phone', e.target.value, STORAGE_KEY)
+        })
+        registerListener('change', '[formcontrolname="bankAccountNumber"]', e => {
+            setValueFromStorage('account_number', e.target.value, STORAGE_KEY)
+        })
+        registerListener('change', '[name="dRemark"]', (e) => {
+            setValueFromStorage('remark', e.target.value, STORAGE_KEY)
+        })
+
+
+        // registerListener('click', 'app-withdraw button.btn-submit', () => {
+        //     valueToDataLayer(
+        //         ['phone', 'account_number', 'amount', 'actual_amount', 'event', 'remark'],
+        //         STORAGE_KEY
+        //     )
+        // })
+
+        let observer = false
+        const observeCb = () => {
+            if(document.body.classList.contains('swal2-shown') && document.querySelector('.swal2-success-fix')) {
+                valueToDataLayer(
+                    ['phone', 'account_number', 'amount', 'actual_amount', 'event', 'remark'],
+                    STORAGE_KEY
+                )
+                observer.disconnect()
+            }
+        }
+        
+
+
+        window.addEventListener('action_withdraw', () => {
+            listeners.forEach(item => {
+                if (!item.active) {
+                    document.body.addEventListener(item.event, item.handler)
+                    item.active = true
+                }
+            })
+            observer = new MutationObserver(observeCb)
+            observer.observe(document.body, {'attributes': true})
+            
+            observeCb()
+        })
+
+        window.addEventListener('action_withdraw_end', () => {
+            listeners.forEach(item => {
+                if (item.active) {
+                    document.body.removeEventListener(item.event, item.handler)
+                    item.active = false
+                }
+            })
+
+            if(observer) {
+                observer.disconnect()
+            }
+        })
+
+
+        initStorage(STORAGE_KEY, {
+            action: "wit",
+            event: "Withdrawal"
+        })
+    })
+})();
