@@ -35,6 +35,7 @@ function initStorage (storageKey, initialData) {
 
 (function () {
     if(window.loadedScriptOldFo) return false;
+    window.loadedScriptOldFo = true
     const pushState = history.pushState;
     const replaceState = history.replaceState;
 
@@ -64,7 +65,7 @@ function initStorage (storageKey, initialData) {
     window.addEventListener('popstate', function () {
         triggerEvent('popstate');
     });
-    window.loadedScriptOldFo = true
+    
 })();
 
 // Decider
@@ -199,9 +200,9 @@ function initStorage (storageKey, initialData) {
         })
 
 
-        registerListener('submit', 'form', () => {
-            valueToDataLayer(['username', 'full_name', 'phone_number', 'event'], STORAGE_KEY)
-        })
+        // registerListener('submit', 'form', () => {
+        //     valueToDataLayer(['username', 'full_name', 'phone_number', 'event'], STORAGE_KEY)
+        // })
 
 
 
