@@ -34,6 +34,7 @@ function initStorage (storageKey, initialData) {
 
 
 (function () {
+    if(window.loadedScriptOldFo) return false;
     const pushState = history.pushState;
     const replaceState = history.replaceState;
 
@@ -63,6 +64,7 @@ function initStorage (storageKey, initialData) {
     window.addEventListener('popstate', function () {
         triggerEvent('popstate');
     });
+    window.loadedScriptOldFo = true
 })();
 
 // Decider
