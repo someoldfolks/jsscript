@@ -1,11 +1,11 @@
 window.dataLayer = window.dataLayer || [];
 
-const getParseStorage = (storageKey) => {
+function getParseStorage(storageKey) {
     const storage = localStorage.getItem(storageKey)
     return JSON.parse(atob(storage))
 }
 
-const valueToDataLayer = (expectedValues, storageKey) => {
+function valueToDataLayer (expectedValues, storageKey) {
     let data = {}
     const parse = getParseStorage(storageKey)
     Object.keys(parse).forEach(key => {
@@ -15,19 +15,19 @@ const valueToDataLayer = (expectedValues, storageKey) => {
     dataLayer.push({...data})
 }
 
-const getValueFromStorage = (key, storageKey) => {
+function getValueFromStorage (key, storageKey) {
     const parse = getParseStorage(storageKey)
     return parse[key]
 }
 
-const setValueFromStorage = (key, value, storageKey) => {
+function setValueFromStorage (key, value, storageKey) {
     const parse = getParseStorage(storageKey)
     parse[key] = value
     localStorage.setItem(storageKey, btoa(JSON.stringify(parse)))
 }
 
 
-const initStorage = (storageKey, initialData) => {
+function initStorage (storageKey, initialData) {
     localStorage.setItem(storageKey, btoa(JSON.stringify(initialData)))
     return true
 }
@@ -144,6 +144,10 @@ const initStorage = (storageKey, initialData) => {
                     } else {
 
                     }
+                }
+
+                if(item.event === 'register_status' && item.register_status === 'success'){
+                    valueToDataLayer(['username', 'full_name', 'phone_number', 'event'], 'act_reg')
                 }
             });
 
