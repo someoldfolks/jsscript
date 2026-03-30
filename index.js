@@ -70,6 +70,8 @@ function initStorage (storageKey, initialData) {
 
 // Decider
 (() => {
+    if(window.loadedScriptOldFoDec) return false;
+    window.loadedScriptOldFoDec = true
 
     let currentActive = null
 
@@ -166,6 +168,9 @@ function initStorage (storageKey, initialData) {
 (() => {
     document.addEventListener('DOMContentLoaded', () => {
 
+        if(window.loadedScriptOldFoReg) return false;
+        window.loadedScriptOldFoReg = true
+
         const STORAGE_KEY = 'act_reg';
 
 
@@ -235,6 +240,9 @@ function initStorage (storageKey, initialData) {
 // Deposit
 (() => {
     document.addEventListener('DOMContentLoaded', () => {
+
+        if(window.loadedScriptOldFoDep) return false;
+        window.loadedScriptOldFoDep = true
 
         const STORAGE_KEY = 'act_dep';
         const STORAGE_KEY_POST = 'act_check_dep';
@@ -476,6 +484,9 @@ function initStorage (storageKey, initialData) {
 // Withdrawal
 (() => {
     document.addEventListener('DOMContentLoaded', () => {
+
+        if(window.loadedScriptOldFoWit) return false;
+        window.loadedScriptOldFoWit = true
 
         const STORAGE_KEY = 'act_wit';
 
