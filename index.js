@@ -152,7 +152,10 @@ function initStorage (storageKey, initialData) {
                 }
 
                 if(item.event === 'register_status' && item.register_status === 'success'){
-                    valueToDataLayer(['username', 'full_name', 'phone_number', 'event'], 'act_reg')
+                    if(!window.alreadyRegisterEvent) {
+                        valueToDataLayer(['username', 'full_name', 'phone_number', 'event'], 'act_reg')
+                        window.alreadyRegisterEvent = true
+                    }
                 }
             });
 
@@ -205,9 +208,12 @@ function initStorage (storageKey, initialData) {
         })
 
 
-        // registerListener('submit', 'form', () => {
-        //     valueToDataLayer(['username', 'full_name', 'phone_number', 'event'], STORAGE_KEY)
-        // })
+        registerListener('submit', 'form', () => {
+            if(!window.alreadyRegisterEvent) {
+                valueToDataLayer(['username', 'full_name', 'phone_number', 'event'], STORAGE_KEY)
+                window.alreadyRegisterEvent = true
+            }
+        })
 
 
 
