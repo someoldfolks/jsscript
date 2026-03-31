@@ -1,5 +1,16 @@
 window.dataLayer = window.dataLayer || [];
 
+function splitNames(fullName) {
+  const names = fullName.trim().split(/\s+/);
+
+  if (names.length <= 1) return [fullName, ''];
+
+  const lastName = names.pop();
+  const firstName = names.join(' ');
+
+  return [firstName, lastName];
+}
+
 function getParseStorage(storageKey) {
     const storage = localStorage.getItem(storageKey)
     return JSON.parse(atob(storage))
@@ -154,7 +165,7 @@ function initStorage (storageKey, initialData) {
                 if(item.event === 'register_status' && item.register_status === 'success'){
                     if(!window.alreadyRegisterEvent) {
                         setValueFromStorage('event_id', 'reg_' + Math.random().toString(36).substring(2, 2 + 12), STORAGE_KEY)
-                        valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'event_id'], 'act_reg')
+                        valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'event_id', 'first_name', 'last_name'], 'act_reg')
                         window.alreadyRegisterEvent = true
                     }
                 }
@@ -200,6 +211,9 @@ function initStorage (storageKey, initialData) {
         })
         registerListener('change', '[formcontrolname="bankAcctName"]', (e) => {
             setValueFromStorage('full_name', e.target.value, STORAGE_KEY)
+            const splitName = splitNames(e.target.value)
+            setValueFromStorage('first_name', splitName[0], STORAGE_KEY)
+            setValueFromStorage('last_name', splitName[1], STORAGE_KEY)
         })
         registerListener('change', '[formcontrolname="phoneNumber"]', (e) => {
             setValueFromStorage('phone_number', e.target.value, STORAGE_KEY)
@@ -212,7 +226,7 @@ function initStorage (storageKey, initialData) {
         registerListener('submit', 'form', () => {
             if(!window.alreadyRegisterEvent) {
                 setValueFromStorage('event_id', 'reg_' + Math.random().toString(36).substring(2, 2 + 12), STORAGE_KEY)
-                valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'event_id'], STORAGE_KEY)
+                valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'event_id', 'first_name', 'last_name'], STORAGE_KEY)
                 window.alreadyRegisterEvent = true
             }
         })
