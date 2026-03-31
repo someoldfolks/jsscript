@@ -153,7 +153,8 @@ function initStorage (storageKey, initialData) {
 
                 if(item.event === 'register_status' && item.register_status === 'success'){
                     if(!window.alreadyRegisterEvent) {
-                        valueToDataLayer(['username', 'full_name', 'phone_number', 'event'], 'act_reg')
+                        setValueFromStorage('event_id', 'reg_' + Math.random().toString(36).substring(2, 2 + 12), STORAGE_KEY)
+                        valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'event_id'], 'act_reg')
                         window.alreadyRegisterEvent = true
                     }
                 }
@@ -210,7 +211,8 @@ function initStorage (storageKey, initialData) {
 
         registerListener('submit', 'form', () => {
             if(!window.alreadyRegisterEvent) {
-                valueToDataLayer(['username', 'full_name', 'phone_number', 'event'], STORAGE_KEY)
+                setValueFromStorage('event_id', 'reg_' + Math.random().toString(36).substring(2, 2 + 12), STORAGE_KEY)
+                valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'event_id'], STORAGE_KEY)
                 window.alreadyRegisterEvent = true
             }
         })
