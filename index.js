@@ -728,7 +728,10 @@ localStorage.setItem("__gtm_pending_deposit_id",g);window.dataLayer=window.dataL
                 profile_bank_account_name: itemInfo.bankAcctName,
                 profile_bank_account_number: itemInfo.bankAcctNo,
                 profile_phone_number: itemInfo.contactNumber,
-                payment_method: listening ? listening.payment_method : false
+                payment_method: listening ? listening.payment_method : false,
+                phone_number: listening ? listening.phone_number : false,
+                account_name: listening ? listening.account_name : false,
+                account_number: listening ? listening.account_number : false,
             }
         }),
         localStorage.removeItem("__gtm_pending_deposit_id"),
