@@ -140,7 +140,7 @@ function initStorage (storageKey, initialData) {
 
             args.forEach(function(item) {
 
-                if(item.event === 'balance_update') {
+                if(item.event === 'balance_updated') {
 
                     if(localStorage.getItem('act_check_dep')) {
 
