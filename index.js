@@ -699,7 +699,7 @@ function initStorage (storageKey, initialData) {
         a = isNaN(a) ? null : a;
         b = parseFloat(b);
         const itemInfo = JSON.parse(localStorage.getItem('memInfo'));
-        const listening = JSON.parse(atob(localStorage.getItem('act_check_dep')));
+        const listening = localStorage.getItem('act_check_dep') ? JSON.parse(atob(localStorage.getItem('act_check_dep'))) : null;
         if (a === null || isNaN(b))
             return console.log("[PURCHASE] Invalid numbers. current\x3d" + a + " baseline\x3d" + b),
             !1;
@@ -720,7 +720,7 @@ function initStorage (storageKey, initialData) {
                 profile_bank_account_name: itemInfo.bankAcctName,
                 profile_bank_account_number: itemInfo.bankAcctNo,
                 profile_phone_number: itemInfo.contactNumber,
-                payment_method: listening.payment_method
+                payment_method: listening ? listening.payment_method : false
             }
         }),
         localStorage.removeItem("gtm_pending_deposit_id"),
