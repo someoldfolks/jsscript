@@ -478,6 +478,19 @@ function initStorage (storageKey, initialData) {
             observer.observe(document.body, {attributes: true})
             observeCb()
 
+            const info = JSON.parse(localStorage.getItem('memInfo'))
+
+            setValueFromStorage('profile_username', info.loginId, 'act_check_dep')
+            setValueFromStorage('profile_bank_name', info.bankName, 'act_check_dep')
+            setValueFromStorage('profile_bank_account_name', info.bankAcctName, 'act_check_dep')
+            setValueFromStorage('profile_bank_account_number', info.bankAcctNo, 'act_check_dep')
+            setValueFromStorage('profile_phone_number', info.contactNumber, 'act_check_dep')
+            setValueFromStorage('profile_username', info.loginId, 'act_dep')
+            setValueFromStorage('profile_bank_name', info.bankName, 'act_dep')
+            setValueFromStorage('profile_bank_account_name', info.bankAcctName, 'act_dep')
+            setValueFromStorage('profile_bank_account_number', info.bankAcctNo, 'act_dep')
+            setValueFromStorage('profile_phone_number', info.contactNumber, 'act_dep')
+
         })
 
         window.addEventListener('action_deposit_end', () => {
