@@ -670,6 +670,14 @@ function initStorage (storageKey, initialData) {
 
 (() => {
 
+    (function(){if(!window._gtmTracerActive){window._gtmTracerActive=!0;var l={"/Wallet/DepositAddOrder":"QRIS","/Wallet/DepositSubmit":"MANUAL"},p=XMLHttpRequest.prototype.open,q=XMLHttpRequest.prototype.send;XMLHttpRequest.prototype.open=function(c,a){this._dep_url=a;return p.apply(this,arguments)};XMLHttpRequest.prototype.send=function(c){var a=this,d=null,e;for(e in l)if(a._dep_url&&a._dep_url.indexOf(e)!==-1){d=l[e];break}if(d){var r=d;a.addEventListener("load",function(){if(a.status===200)try{var b=
+JSON.parse(a.responseText);if(b.code===0){var f=c?JSON.parse(c):{},t=r,g=t==="QRIS"?"QRIS_"+(b.data&&b.data.tranNo?b.data.tranNo:Date.now()):"MANUAL_"+Date.now(),u=f&&f.amount?f.amount:0,m=parseFloat(String(u).replace(/[^0-9.]/g,"")),v=(isNaN(m)?0:Math.round(m))*1E3;var h=document.querySelector(".balance-nav strong.money");if(h){var n=parseFloat((h.innerText||h.textContent||"").replace(/[^0-9.]/g,""));var k=isNaN(n)?null:n}else k=null;k!==null&&localStorage.setItem("__gtm_pre_deposit_balance",String(k));
+localStorage.setItem("__gtm_pending_deposit_id",g);window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:"fb_begin_checkout",event_id:g,checkout_data:{transaction_id:g,value:v,currency:"IDR"}})}}catch(w){}})}return q.apply(this,arguments)}}})();
+
+})();
+
+(() => {
+
 
     (function() {
     function f(d) {
