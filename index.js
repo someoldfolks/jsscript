@@ -128,7 +128,7 @@ function initStorage (storageKey, initialData) {
                     ],
                     'act_check_dep'
                 )
-                localStorage.removeItem('act_check_dep')
+                // localStorage.removeItem('act_check_dep')
             }
         }
         if(tryFind) {
@@ -171,7 +171,7 @@ function initStorage (storageKey, initialData) {
                             ],
                             'act_check_dep'
                         )
-                        localStorage.removeItem('act_check_dep')
+                        // localStorage.removeItem('act_check_dep')
                     } else {
 
                     }
@@ -725,6 +725,7 @@ function initStorage (storageKey, initialData) {
         }),
         localStorage.removeItem("gtm_pending_deposit_id"),
         localStorage.removeItem("gtm_pre_deposit_balance"),
+        localStorage.removeItem("act_check_dep"),
         console.log("[PURCHASE] Cleared localStorage flags after fire."),
         !0) : !1
     }
