@@ -673,8 +673,8 @@ function initStorage (storageKey, initialData) {
 
     (function() {
     function f(d) {
-        var h = localStorage.getItem("gtm_pending_deposit_id")
-          , b = localStorage.getItem("gtm_pre_deposit_balance");
+        var h = localStorage.getItem("__gtm_pending_deposit_id")
+          , b = localStorage.getItem("__gtm_pre_deposit_balance");
         if (!h || !b)
             return !1;
         a: {
@@ -723,15 +723,15 @@ function initStorage (storageKey, initialData) {
                 payment_method: listening ? listening.payment_method : false
             }
         }),
-        localStorage.removeItem("gtm_pending_deposit_id"),
-        localStorage.removeItem("gtm_pre_deposit_balance"),
+        localStorage.removeItem("__gtm_pending_deposit_id"),
+        localStorage.removeItem("__gtm_pre_deposit_balance"),
         localStorage.removeItem("act_check_dep"),
         console.log("[PURCHASE] Cleared localStorage flags after fire."),
         !0) : !1
     }
     function n() {
         e || (e = setInterval(function() {
-            localStorage.getItem("gtm_pending_deposit_id") && localStorage.getItem("gtm_pre_deposit_balance") ? (l++,
+            localStorage.getItem("__gtm_pending_deposit_id") && localStorage.getItem("__gtm_pre_deposit_balance") ? (l++,
             l >= p ? (clearInterval(e),
             e = null,
             console.log("[PURCHASE] Polling stopped after timeout")) : f("polling")) : e && (clearInterval(e),
@@ -754,7 +754,7 @@ function initStorage (storageKey, initialData) {
         var e = null
           , p = 60
           , l = 0;
-        localStorage.getItem("gtm_pending_deposit_id") && localStorage.getItem("gtm_pre_deposit_balance") && n();
+        localStorage.getItem("__gtm_pending_deposit_id") && localStorage.getItem("__gtm_pre_deposit_balance") && n();
         var m = location.href
           , k = function() {
             var d = location.href;
