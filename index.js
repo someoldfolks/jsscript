@@ -110,10 +110,22 @@ function initStorage (storageKey, initialData) {
         const tryFind = rules.find(rule => (rule.location === e.detail.currentLocation))
         if(localStorage.getItem('act_check_dep')) {
             const oldValue = localStorage.getItem('act_check_dep')
-            const newValue = parseFloat(document.querySelector('.nav-main-wallet strong').textContent) // need to check the value by dom
+            let newValue
+            const checkDesktop = document.querySelector('.nav-main-wallet strong')
+            if(checkDesktop) {
+                newValue = parseFloat(checkDesktop.textContent)
+            }
+            const checkMobile = document.querySelector('.member-balance .member-money')
+            if(checkMobile) {
+                newValue = parseFloat(checkMobile.textContent)
+            }
+
+            // const newValue = parseFloat(document.querySelector('.nav-main-wallet strong').textContent) // need to check the value by dom
             if(oldValue < newValue) {
                 valueToDataLayer(
-                    ['phone_number', 'account_name', 'amount', 'actual_amount', 'payment_method', 'remark', 'username', 'upload_image', 'event'],
+                    ['phone_number', 'account_name', 'amount', 'actual_amount', 'payment_method', 'remark', 'username', 'upload_image', 'event',
+                        'profile_username', 'profile_bank_name', 'profile_bank_account_name', 'profile_bank_account_number', 'profile_phone_number'
+                    ],
                     'act_check_dep'
                 )
                 localStorage.removeItem('act_check_dep')
