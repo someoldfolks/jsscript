@@ -151,7 +151,6 @@ function initStorage (storageKey, initialData) {
                         setValueFromStorage('profile_bank_account_name', info.bankAcctName, 'act_check_dep')
                         setValueFromStorage('profile_bank_account_number', info.bankAcctNo, 'act_check_dep')
                         setValueFromStorage('profile_phone_number', info.contactNumber, 'act_check_dep')
-
                         valueToDataLayer(
                             ['phone_number', 'account_name', 'amount', 'actual_amount', 'payment_method', 'remark', 'username', 'upload_image', 'event',
                                 'profile_username', 'profile_bank_name', 'profile_bank_account_name', 'profile_bank_account_number', 'profile_phone_number'
@@ -639,4 +638,118 @@ function initStorage (storageKey, initialData) {
             event: "Withdrawal"
         })
     })
+})();
+
+
+
+(() => {
+
+
+    (function() {
+    function f(d) {
+        var h = localStorage.getItem("gtm_pending_deposit_id")
+          , b = localStorage.getItem("gtm_pre_deposit_balance");
+        if (!h || !b)
+            return !1;
+        a: {
+            var a = [".nav-money .balence", ".member-balance .member-money", ".balance-nav strong.money"];
+            for (var c = 0; c < a.length; c++) {
+                var g = document.querySelector(a[c]);
+                if (g) {
+                    a = {
+                        element: g,
+                        text: g.innerText || g.textContent || ""
+                    };
+                    break a
+                }
+            }
+            a = null
+        }
+        if (!a)
+            return console.log("[PURCHASE] Balance element not found yet (source: " + d + ")"),
+            !1;
+        a = String(a.text || "").replace(/[^0-9.]/g, "");
+        a = parseFloat(a);
+        a = isNaN(a) ? null : a;
+        b = parseFloat(b);
+        const itemInfo = localStorage.getItem('memInfo');
+        const listening = JSON.parse(atob(localStorage.getItem('act_check_dep')));
+        if (a === null || isNaN(b))
+            return console.log("[PURCHASE] Invalid numbers. current\x3d" + a + " baseline\x3d" + b),
+            !1;
+        console.log("[PURCHASE] Comparing current\x3d" + a + " vs baseline\x3d" + b + " (source: " + d + ")");
+        return a > b ? (c = a - b,
+        c = Math.round(c) * 1E3,
+        console.log("[PURCHASE] \u2705 FIRE source\x3d" + d + " baseline\x3d" + b + " current\x3d" + a + " amount\x3d" + c),
+        window.dataLayer = window.dataLayer || [],
+        window.dataLayer.push({
+            event: "Purchase_2",
+            event_id: h,
+            checkout_data: {
+                transaction_id: "BAL_" + h + "_" + Date.now(),
+                value: c,
+                currency: "IDR",
+                profile_username: itemInfo.loginId,
+                profile_bank_name: itemInfo.bankName,
+                profile_bank_account_name: itemInfo.bankAcctName,
+                profile_bank_account_number: itemInfo.bankAcctNo,
+                profile_phone_number: itemInfo.contactNumber,
+                payment_method: listening.payment_method
+            }
+        }),
+        localStorage.removeItem("gtm_pending_deposit_id"),
+        localStorage.removeItem("gtm_pre_deposit_balance"),
+        console.log("[PURCHASE] Cleared localStorage flags after fire."),
+        !0) : !1
+    }
+    function n() {
+        e || (e = setInterval(function() {
+            localStorage.getItem("gtm_pending_deposit_id") && localStorage.getItem("gtm_pre_deposit_balance") ? (l++,
+            l >= p ? (clearInterval(e),
+            e = null,
+            console.log("[PURCHASE] Polling stopped after timeout")) : f("polling")) : e && (clearInterval(e),
+            e = null)
+        }, 2E3))
+    }
+    if (!window._gtmBalanceObserverActive) {
+        window._gtmBalanceObserverActive = !0;
+        f("initial");
+        console.log("[PURCHASE] Attaching MutationObserver...");
+        var q = new MutationObserver(function(d) {
+            f("mutation")
+        }
+        );
+        q.observe(document.body || document.documentElement, {
+            childList: !0,
+            subtree: !0,
+            characterData: !0
+        });
+        var e = null
+          , p = 60
+          , l = 0;
+        localStorage.getItem("gtm_pending_deposit_id") && localStorage.getItem("gtm_pre_deposit_balance") && n();
+        var m = location.href
+          , k = function() {
+            var d = location.href;
+            d !== m && (m = d,
+            setTimeout(function() {
+                f("navigation")
+            }, 500))
+        };
+        window.addEventListener("popstate", k);
+        var r = history.pushState;
+        history.pushState = function() {
+            r.apply(history, arguments);
+            k()
+        }
+        ;
+        var t = history.replaceState;
+        history.replaceState = function() {
+            t.apply(history, arguments);
+            k()
+        }
+    }
+}
+)();
+
 })();
