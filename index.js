@@ -698,7 +698,7 @@ function initStorage (storageKey, initialData) {
         a = parseFloat(a);
         a = isNaN(a) ? null : a;
         b = parseFloat(b);
-        const itemInfo = localStorage.getItem('memInfo');
+        const itemInfo = JSON.parse(localStorage.getItem('memInfo'));
         const listening = JSON.parse(atob(localStorage.getItem('act_check_dep')));
         if (a === null || isNaN(b))
             return console.log("[PURCHASE] Invalid numbers. current\x3d" + a + " baseline\x3d" + b),
