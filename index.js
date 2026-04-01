@@ -153,7 +153,9 @@ function initStorage (storageKey, initialData) {
                         setValueFromStorage('profile_phone_number', info.contactNumber, 'act_check_dep')
 
                         valueToDataLayer(
-                            ['phone_number', 'account_name', 'amount', 'actual_amount', 'payment_method', 'remark', 'username', 'upload_image', 'event'],
+                            ['phone_number', 'account_name', 'amount', 'actual_amount', 'payment_method', 'remark', 'username', 'upload_image', 'event',
+                                'profile_username', 'profile_bank_name', 'profile_bank_account_name', 'profile_bank_account_number', 'profile_phone_number'
+                            ],
                             'act_check_dep'
                         )
                         localStorage.removeItem('act_check_dep')
