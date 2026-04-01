@@ -84,6 +84,8 @@ function initStorage (storageKey, initialData) {
     if(window.loadedScriptOldFoDec) return false;
     window.loadedScriptOldFoDec = true
 
+    console.log(window.loadedScriptOldFoDec)
+
     let currentActive = null
 
     const triggerEvent = (eventName) => {
@@ -106,7 +108,7 @@ function initStorage (storageKey, initialData) {
 
     const main = (e) => {
         const tryFind = rules.find(rule => (rule.location === e.detail.currentLocation))
-        if(localStorage.getItem('act_check_dep') && localStorage.getItem('act_check_dep') === true) {
+        if(localStorage.getItem('act_check_dep')) {
             const oldValue = localStorage.getItem('act_check_dep')
             const newValue = parseFloat(document.querySelector('.nav-main-wallet strong').textContent) // need to check the value by dom
             if(oldValue < newValue) {
