@@ -734,6 +734,7 @@ localStorage.setItem("__gtm_pending_deposit_id",g);window.dataLayer=window.dataL
         window.dataLayer.push({
             event: "Purchase_2",
             event_id: h,
+            event_time: Math.floor(Date.now() / 1000),
             checkout_data: {
                 transaction_id: "BAL_" + h + "_" + Date.now(),
                 value: c,
