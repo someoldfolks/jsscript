@@ -304,11 +304,13 @@ function initStorage (storageKey, initialData) {
 
         registerListener('change', '[name="wallet"]', (e) => {
             setValueFromStorage('payment_method', e.target.value, STORAGE_KEY)
+            setValueFromStorage('payment_method', e.target.value, STORAGE_KEY_POST)
             if(e.target.value === 'ewallet') {
                 // check for mobile already exist
                 const phone = document.querySelector('[name="dPhoneNumber"]')?.value
                 if(phone) {
                     setValueFromStorage('phone_number', phone, STORAGE_KEY)
+                    setValueFromStorage('phone_number', phone, STORAGE_KEY_POST)
                 }
             }
         })
@@ -316,12 +318,14 @@ function initStorage (storageKey, initialData) {
 
         registerListener('change', '[name="dPhoneNumber"]', e => {
             setValueFromStorage('phone_number', e.target.value, STORAGE_KEY)
+            setValueFromStorage('phone_number', e.target.value, STORAGE_KEY_POST)
         })
         registerListener('change', 'input[name="provider"]',  (e) => {
             setTimeout(() => {
                 const accName = document.querySelector('[formcontrolname="bankAccountName"]')?.value
                 if(accName) {
                     setValueFromStorage('account_name', accName, STORAGE_KEY)
+                    setValueFromStorage('account_name', accName, STORAGE_KEY_POST)
                 }
             }, 1000)
         })
@@ -330,6 +334,7 @@ function initStorage (storageKey, initialData) {
                 const accName = document.querySelector('[formcontrolname="bankAccountName"]')?.value
                 if(accName) {
                     setValueFromStorage('account_name', accName, STORAGE_KEY)
+                    setValueFromStorage('account_name', accName, STORAGE_KEY_POST)
                 }
             }, 1000)
         })
@@ -338,10 +343,12 @@ function initStorage (storageKey, initialData) {
             const accName = document.querySelector('[formcontrolname="bankAccountName"]')?.value
             if(accName) {
                 setValueFromStorage('account_name', accName, STORAGE_KEY)
+                setValueFromStorage('account_name', accName, STORAGE_KEY_POST)
             }
             const phone = document.querySelector('[name="dPhoneNumber"]')?.value
             if(phone) {
                 setValueFromStorage('phone_number', phone, STORAGE_KEY)
+                setValueFromStorage('phone_number', phone, STORAGE_KEY_POST)
             }
         }
 
@@ -349,25 +356,32 @@ function initStorage (storageKey, initialData) {
             const amount = e.target.getAttribute('data_axq').replace('amount_', '')
             const actualMoney = document.querySelector('[name="dActualMoney"]').value
             setValueFromStorage('amount', amount, STORAGE_KEY)
+            setValueFromStorage('amount', amount, STORAGE_KEY_POST)
             setValueFromStorage('actual_amount', actualMoney, STORAGE_KEY)
+            setValueFromStorage('actual_amount', actualMoney, STORAGE_KEY_POST)
             checkForAccountNameAndPhone()
         })
         registerListener('change', '[name="dAmount"]', (e) => {
             setValueFromStorage('amount', e.target.value, STORAGE_KEY)
+            setValueFromStorage('amount', e.target.value, STORAGE_KEY_POST)
             const actualMoney = document.querySelector('[name="dActualMoney"]').value
             setValueFromStorage('actual_amount', actualMoney, STORAGE_KEY)
+            setValueFromStorage('actual_amount', actualMoney, STORAGE_KEY_POST)
             checkForAccountNameAndPhone()
         })
 
         registerListener('change', '[formcontrolname="bankAccountNumber"]', e => {
             setValueFromStorage('account_number', e.target.value, STORAGE_KEY)
+            setValueFromStorage('account_number', e.target.value, STORAGE_KEY_POST)
         })
 
         registerListener('change', '[formcontrolname="bankName"]', (e) => {
             setValueFromStorage('bank_name', e.target.value, STORAGE_KEY)
+            setValueFromStorage('bank_name', e.target.value, STORAGE_KEY_POST)
         })
         registerListener('change', '[name="dRemark"]', (e) => {
             setValueFromStorage('remark', e.target.value, STORAGE_KEY)
+            setValueFromStorage('remark', e.target.value, STORAGE_KEY_POST)
         })
 
 
@@ -514,6 +528,7 @@ function initStorage (storageKey, initialData) {
                     item.active = true
                 }
             })
+            initStorage(STORAGE_KEY_POST, {'event': "Purchase_2"})
             observer = new MutationObserver(observeCb)
             observer.observe(document.body, {attributes: true})
             observeCb()
