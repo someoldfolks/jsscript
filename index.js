@@ -291,7 +291,7 @@ function initStorage (storageKey, initialData) {
                     item.active = false
                 }
             })
-            observeCb()
+            cbObserver()
             console.log('ending register')
             if(observer) {
                 observer.disconnect()
