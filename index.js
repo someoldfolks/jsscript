@@ -180,16 +180,16 @@ function initStorage (storageKey, initialData) {
                 if(item.event === 'register_status' && item.register_status === 'success'){
                     if(!window.alreadyRegisterEvent) {
                         window.alreadyRegisterEvent = true
-                        setValueFromStorage('event_id', 'reg_' + Math.random().toString(36).substring(2, 2 + 12), STORAGE_KEY)
-                        valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'event_id', 'first_name', 'last_name'], 'act_reg')
+                        setValueFromStorage('reg_event_id', 'reg_' + Math.random().toString(36).substring(2, 2 + 12), STORAGE_KEY)
+                        valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'reg_event_id', 'first_name', 'last_name'], 'act_reg')
                     }
                 }
                 
                 if(item.event === 'fb_registration_complete') {
                     if(!window.alreadyRegisterEvent) {
                         window.alreadyRegisterEvent = true
-                        setValueFromStorage('event_id', 'reg_' + Math.random().toString(36).substring(2, 2 + 12), STORAGE_KEY)
-                        valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'event_id', 'first_name', 'last_name'], 'act_reg')
+                        setValueFromStorage('reg_event_id', 'reg_' + Math.random().toString(36).substring(2, 2 + 12), STORAGE_KEY)
+                        valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'reg_event_id', 'first_name', 'last_name'], 'act_reg')
                     }
                 }
                 
@@ -249,8 +249,8 @@ function initStorage (storageKey, initialData) {
 
         registerListener('submit', 'form', () => {
             if(!window.alreadyRegisterEvent) {
-                setValueFromStorage('event_id', 'reg_' + Math.random().toString(36).substring(2, 2 + 12), STORAGE_KEY)
-                valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'event_id', 'first_name', 'last_name'], STORAGE_KEY)
+                setValueFromStorage('reg_event_id', 'reg_' + Math.random().toString(36).substring(2, 2 + 12), STORAGE_KEY)
+                valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'reg_event_id', 'first_name', 'last_name'], STORAGE_KEY)
                 window.alreadyRegisterEvent = true
             }
         })
@@ -261,8 +261,8 @@ function initStorage (storageKey, initialData) {
             const info = window.localStorage.getItem('memInfo')
             if(info) {
                 if(!window.alreadyRegisterEvent) {
-                    setValueFromStorage('event_id', 'reg_' + Math.random().toString(36).substring(2, 2 + 12), STORAGE_KEY)
-                    valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'event_id', 'first_name', 'last_name'], STORAGE_KEY)
+                    setValueFromStorage('reg_event_id', 'reg_' + Math.random().toString(36).substring(2, 2 + 12), STORAGE_KEY)
+                    valueToDataLayer(['username', 'full_name', 'phone_number', 'event', 'reg_event_id', 'first_name', 'last_name'], STORAGE_KEY)
                     window.alreadyRegisterEvent = true
                     if(observer) {
                         observer.disconnect()
