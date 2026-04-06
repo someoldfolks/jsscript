@@ -45,8 +45,8 @@ function initStorage (storageKey, initialData) {
 
 
 (function () {
-    if(window.loadedScriptOldFo) return false;
-    window.loadedScriptOldFo = true
+    // if(window.loadedScriptOldFo) return false;
+    // window.loadedScriptOldFo = true
     const pushState = history.pushState;
     const replaceState = history.replaceState;
 
@@ -81,10 +81,10 @@ function initStorage (storageKey, initialData) {
 
 // Decider
 (() => {
-    if(window.loadedScriptOldFoDec) return false;
-    window.loadedScriptOldFoDec = true
+    // if(window.loadedScriptOldFoDec) return false;
+    // window.loadedScriptOldFoDec = true
 
-    console.log(window.loadedScriptOldFoDec)
+    // console.log(window.loadedScriptOldFoDec)
 
     let currentActive = null
 
@@ -207,8 +207,8 @@ function initStorage (storageKey, initialData) {
 (() => {
     document.addEventListener('DOMContentLoaded', () => {
 
-        if(window.loadedScriptOldFoReg) return false;
-        window.loadedScriptOldFoReg = true
+        // if(window.loadedScriptOldFoReg) return false;
+        // window.loadedScriptOldFoReg = true
 
         const STORAGE_KEY = 'act_reg';
 
@@ -310,8 +310,8 @@ function initStorage (storageKey, initialData) {
 (() => {
     document.addEventListener('DOMContentLoaded', () => {
 
-        if(window.loadedScriptOldFoDep) return false;
-        window.loadedScriptOldFoDep = true
+        // if(window.loadedScriptOldFoDep) return false;
+        // window.loadedScriptOldFoDep = true
 
         const STORAGE_KEY = 'act_dep';
         const STORAGE_KEY_POST = 'act_check_dep';
@@ -594,8 +594,8 @@ function initStorage (storageKey, initialData) {
 (() => {
     document.addEventListener('DOMContentLoaded', () => {
 
-        if(window.loadedScriptOldFoWit) return false;
-        window.loadedScriptOldFoWit = true
+        // if(window.loadedScriptOldFoWit) return false;
+        // window.loadedScriptOldFoWit = true
 
         const STORAGE_KEY = 'act_wit';
 
