@@ -279,10 +279,11 @@ function initStorage (storageKey, initialData) {
                     item.active = true
                 }
             })
+            console.log('starting_register')
             observer = new MutationObserver(cbObserver)
             observer.observe(document.body, {childList: true})
         })
-
+        
         window.addEventListener('action_register_end', () => {
             listeners.forEach(item => {
                 if (item.active) {
@@ -291,6 +292,7 @@ function initStorage (storageKey, initialData) {
                 }
             })
             observeCb()
+            console.log('ending register')
             if(observer) {
                 observer.disconnect()
             }
