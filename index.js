@@ -205,7 +205,7 @@ function initStorage (storageKey, initialData) {
 
 // Registration
 (() => {
-    document.addEventListener('DOMContentLoaded', () => {
+    // document.addEventListener('DOMContentLoaded', () => {
 
         // if(window.loadedScriptOldFoReg) return false;
         // window.loadedScriptOldFoReg = true
@@ -303,12 +303,12 @@ function initStorage (storageKey, initialData) {
             action: 'reg',
             event: 'Register'
         })
-    })
+    // })
 })();
 
 // Deposit
 (() => {
-    document.addEventListener('DOMContentLoaded', () => {
+    // document.addEventListener('DOMContentLoaded', () => {
 
         // if(window.loadedScriptOldFoDep) return false;
         // window.loadedScriptOldFoDep = true
@@ -584,7 +584,7 @@ function initStorage (storageKey, initialData) {
             action: "dep",
             event: "Purchase"
         })
-    })
+    // })
 })();
 
 
@@ -592,7 +592,7 @@ function initStorage (storageKey, initialData) {
 
 // Withdrawal
 (() => {
-    document.addEventListener('DOMContentLoaded', () => {
+    // document.addEventListener('DOMContentLoaded', () => {
 
         // if(window.loadedScriptOldFoWit) return false;
         // window.loadedScriptOldFoWit = true
@@ -710,7 +710,7 @@ function initStorage (storageKey, initialData) {
             action: "wit",
             event: "Withdrawal"
         })
-    })
+    // })
 })();
 
 
