@@ -290,6 +290,7 @@ function initStorage (storageKey, initialData) {
                     item.active = false
                 }
             })
+            observeCb()
             if(observer) {
                 observer.disconnect()
             }
